@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Test - Debug</title>
+    <!-- <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .debug-log {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #000;
+            color: #0f0;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 11px;
+            z-index: 9999;
+        }
+        .debug-log div { margin: 2px 0; }
+        .error { color: #f00; }
+        .success { color: #0f0; }
+        .info { color: #0ff; }
+    </style> -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">GymMS Admin (Debug Mode)</div>
+        <div class="nav-links">
+            <a href="#members">Members</a>
+            <a href="#billing">Billing</a>
+            <a href="#" id="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <section id="members" class="section">
+            <div class="card-header">
+                <h2>Member Management</h2>
+            </div>
+            <div id="member-list" class="data-table">
+                <p>Loading...</p>
+            </div>
+        </section>
+
+        <section id="billing" class="section">
+            <div class="card-header">
+                <h2>Billing</h2>
+            </div>
+            <div id="bill-list" class="data-table">
+                <p>Loading...</p>
+            </div>
+        </section>
+    </main>
+
+    <div class="debug-log" id="debug-log"></div>
+
+    <script type="module">
+        const debugLog = document.getElementById('debug-log');
+        
+        function log(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = type;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            debugLog.appendChild(div);
+            debugLog.scrollTop = debugLog.scrollHeight;
+            console.log(message);
+        }
+
+        // Catch all errors
+        window.onerror = function(msg, url, line, col, error) {
+            log(`ERROR: ${msg} at ${line}:${col}`, 'error');
+            return false;
+        };
+
+        log('Starting admin page initialization...', 'info');
+
+        async function initializePage() {
+            try {
+                // Import modules
+                log('Importing modules...', 'info');
+                const { SUPABASE_URL, SUPABASE_ANON_KEY } = await import('./js/config.js');
+                log('✓ Config imported', 'success');
+
+                // Initialize Supabase
+                log('Initializing Supabase...', 'info');
+                const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                log('✓ Supabase initialized', 'success');
+
+                // Check auth
+                log('Checking authentication...', 'info');
+                const { data: { user }, error: authError } = await supabase.auth.getUser();
+                
+                if (authError) {
+                    log(`Auth error: ${authError.message}`, 'error');
+                    throw authError;
+                }
+
+                if (!user) {
+                    log('No user found, redirecting to login...', 'error');
+                    setTimeout(() => window.location.href = 'pages/login.html', 2000);
+                    return;
+                }
+
+            log(`✓ User authenticated: ${user.email}`, 'success');
+
+            // Load members
+            log('Loading members...', 'info');
+            const { data: members, error: membersError } = await supabase
+                .from('members')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (membersError) {
+                log(`Members error: ${membersError.message}`, 'error');
+                document.getElementById('member-list').innerHTML = 
+                    `<div class="empty-state"><p>Error loading members: ${membersError.message}</p></div>`;
+            } else {
+                log(`✓ Loaded ${members?.length || 0} members`, 'success');
+                displayMembers(members);
+            }
+
+            // Load bills
+            log('Loading bills...', 'info');
+            const { data: bills, error: billsError } = await supabase
+                .from('bills')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (billsError) {
+                log(`Bills error: ${billsError.message}`, 'error');
+                document.getElementById('bill-list').innerHTML = 
+                    `<div class="empty-state"><p>Error loading bills: ${billsError.message}</p></div>`;
+            } else {
+                log(`✓ Loaded ${bills?.length || 0} bills`, 'success');
+                displayBills(bills);
+            }
+
+            // Setup logout
+            document.getElementById('logout-btn').addEventListener('click', async () => {
+                log('Logging out...', 'info');
+                await supabase.auth.signOut();
+                window.location.href = 'index.html';
+            });
+
+                log('✓ Admin page fully loaded!', 'success');
+
+            } catch (error) {
+                log(`FATAL ERROR: ${error.message}`, 'error');
+                console.error('Full error:', error);
+            }
+        }
+
+        // Run initialization
+        initializePage();
+
+        function displayMembers(members) {
+            const memberList = document.getElementById('member-list');
+            
+            if (!members || members.length === 0) {
+                memberList.innerHTML = '<div class="empty-state"><p>No members found. Add sample data from database/sample-data.sql</p></div>';
+                return;
+            }
+
+            const table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Package</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${members.map(m => `
+                            <tr>
+                                <td><strong>${m.name}</strong></td>
+                                <td>${m.email}</td>
+                                <td>${m.phone || 'N/A'}</td>
+                                <td><span class="badge badge-primary">${m.package.toUpperCase()}</span></td>
+                                <td><span class="badge ${m.status === 'active' ? 'badge-success' : 'badge-danger'}">${m.status.toUpperCase()}</span></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            memberList.innerHTML = table;
+        }
+
+        function displayBills(bills) {
+            const billList = document.getElementById('bill-list');
+            
+            if (!bills || bills.length === 0) {
+                billList.innerHTML = '<div class="empty-state"><p>No bills found. Add sample data from database/sample-data.sql</p></div>';
+                return;
+            }
+
+            const getStatusBadge = (status) => {
+                const badges = {
+                    'paid': 'badge-success',
+                    'pending': 'badge-warning',
+                    'overdue': 'badge-danger'
+                };
+                return badges[status] || 'badge-secondary';
+            };
+
+            const table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Member ID</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${bills.map(b => `
+                            <tr>
+                                <td>${b.member_id.substring(0, 8)}...</td>
+                                <td><strong>$${b.amount.toFixed(2)}</strong></td>
+                                <td>${new Date(b.due_date).toLocaleDateString()}</td>
+                                <td><span class="badge ${getStatusBadge(b.status)}">${b.status.toUpperCase()}</span></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            billList.innerHTML = table;
+        }
+    </script>
+</body>
+</html>

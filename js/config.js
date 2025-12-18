@@ -1,0 +1,9 @@
+// Supabase Configuration
+export const SUPABASE_URL = 'https://qlgxwgqkunplprsrpicx.supabase.co';
+export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ3h3Z3FrdW5wbHByc3JwaWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0ODM4NDUsImV4cCI6MjA4MDA1OTg0NX0.9i0K2XoHtcZaUiztwwKAxCYYyMDbsYeZm1te5nSLYQg';
+
+// User roles
+export const ROLES = {
+    ADMIN: 'admin',
+    MEMBER: 'member'
+};

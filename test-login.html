@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login - Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .log {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 3px solid #333;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .error { border-color: red; background: #fee; }
+        .success { border-color: green; background: #efe; }
+        input, button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button { cursor: pointer; background: #007bff; color: white; border: none; }
+    </style>
+</head>
+<body>
+    <h1>Login Debug Test</h1>
+    
+    <div id="logs"></div>
+    
+    <form id="test-form">
+        <input type="email" id="email" placeholder="Email" value="admin@gym.com">
+        <input type="password" id="password" placeholder="Password" value="Admin123!">
+        <button type="submit">Test Login</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module">
+        const logs = document.getElementById('logs');
+        
+        function addLog(message, type = 'log') {
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logs.appendChild(div);
+            console.log(message);
+        }
+
+        // Test 1: Check if Supabase loaded
+        addLog('Testing Supabase CDN load...', 'log');
+        if (typeof window.supabase !== 'undefined') {
+            addLog('✓ Supabase CDN loaded successfully', 'success');
+        } else {
+            addLog('✗ Supabase CDN failed to load', 'error');
+        }
+
+        // Test 2: Import config
+        import { SUPABASE_URL, SUPABASE_ANON_KEY, ROLES } from './js/config.js';
+        addLog(`Config loaded: ${SUPABASE_URL.substring(0, 30)}...`, 'success');
+
+        // Test 3: Initialize Supabase
+        let supabase;
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            addLog('✓ Supabase client initialized', 'success');
+        } catch (error) {
+            addLog(`✗ Supabase init error: ${error.message}`, 'error');
+        }
+
+        // Test 4: Login form
+        document.getElementById('test-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            addLog(`Attempting login for: ${email}`, 'log');
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+                if (error) {
+                    addLog(`✗ Login error: ${error.message}`, 'error');
+                    return;
+                }
+
+                addLog(`✓ Login successful! User ID: ${data.user.id}`, 'success');
+
+                // Test profile fetch
+                addLog('Fetching user profile...', 'log');
+                const { data: profile, error: profileError } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', data.user.id)
+                    .single();
+
+                if (profileError) {
+                    addLog(`✗ Profile error: ${profileError.message}`, 'error');
+                    addLog(`Profile error details: ${JSON.stringify(profileError)}`, 'error');
+                    return;
+                }
+
+                if (profile) {
+                    addLog(`✓ Profile loaded! Role: ${profile.role}`, 'success');
+                    
+                    // Determine redirect
+                    const redirectUrl = profile.role === ROLES.ADMIN 
+                        ? '../pages/admin.html' 
+                        : '../pages/member.html';
+                    
+                    addLog(`Would redirect to: ${redirectUrl}`, 'success');
+                    addLog('Redirecting in 3 seconds...', 'log');
+                    
+                    setTimeout(() => {
+                        window.location.href = redirectUrl;
+                    }, 3000);
+                } else {
+                    addLog('✗ No profile found for user', 'error');
+                }
+
+            } catch (error) {
+                addLog(`✗ Unexpected error: ${error.message}`, 'error');
+                console.error(error);
+            }
+        });
+
+        addLog('Ready to test login!', 'success');
+    </script>
+</body>
+</html>

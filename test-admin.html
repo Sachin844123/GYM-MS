@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">GymMS Admin (Test Mode)</div>
+        <div class="nav-links">
+            <a href="#members">Members</a>
+            <a href="#billing">Billing</a>
+            <a href="#reports">Reports</a>
+            <a href="index.html">Logout</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">7</div>
+                <div class="stat-label">Active Members</div>
+            </div>
+            <div class="stat-card success">
+<div class="stat-value">$1,247</div>
+                <div class="stat-label">Monthly Revenue</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Pending Payments</div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-value">15</div>
+                <div class="stat-label">Classes This Week</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="showAddMemberModal()">Add New Member</button>
+                <button class="btn btn-secondary" onclick="showBillingModal()">Process Payment</button>
+                <button class="btn btn-info" onclick="generateReport()">Generate Report</button>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <h2>Recent Activity</h2>
+            <div class="activity-list">
+                <div class="activity-item">
+                    <span class="activity-time">2 hours ago</span>
+                    <span class="activity-text">John Doe renewed membership</span>
+                </div>
+                <div class="activity-item">
+                    <span class="activity-time">4 hours ago</span>
+                    <span class="activity-text">Payment received from Sarah Smith</span>
+                </div>
+                <div class="activity-item">
+                    <span class="activity-time">1 day ago</span>
+                    <span class="activity-text">New member Mike Johnson registered</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Member Modal -->
+    <div id="addMemberModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Member</h2>
+            <form id="addMemberForm">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <select required>
+                    <option value="">Select Membership Type</option>
+                    <option value="basic">Basic - $29/month</option>
+                    <option value="premium">Premium - $49/month</option>
+                    <option value="vip">VIP - $79/month</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Add Member</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - GymMS</title>
+    <link rel="stylesheet" href="../css/styles-fixed.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body style="background: #f8fafc; min-height: 100vh;">
+    <nav class="navbar">
+        <div class="nav-brand">GymMS Admin</div>
+        <div class="nav-links">
+            <a href="#members">Members</a>
+            <a href="#billing">Billing</a>
+            <a href="#reports">Reports</a>
+            <a href="#" id="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <section id="members" class="section">
+            <div class="card-header">
+                <h2>Member Management</h2>
+                <button class="btn-primary" id="add-member-btn">+ Add Member</button>
+            </div>
+            <div id="member-list" class="data-table"></div>
+        </section>
+
+        <section id="billing" class="section">
+            <div class="card-header">
+                <h2>Billing</h2>
+                <button class="btn-primary" id="create-bill-btn">+ Create Bill</button>
+            </div>
+            <div id="bill-list" class="data-table"></div>
+        </section>
+
+        <section id="reports" class="section">
+            <div class="card-header">
+                <h2>Reports</h2>
+                <button class="btn-primary" id="export-report-btn">📊 Export Report</button>
+            </div>
+            <div id="report-data">
+                <p>Generate and export comprehensive reports of gym operations, member data, and financial records.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script type="module" src="../js/admin.js"></script>
+</body>
+</html>

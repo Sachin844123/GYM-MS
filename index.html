@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitZone - Premium Gym & Fitness Center</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <nav class="navbar-home">
+        <div class="nav-container">
+            <div class="nav-brand-home">FIT<span>ZONE</span></div>
+            <div class="nav-links-home">
+                <a href="#home" class="active">HOME</a>
+                <a href="#programs">PROGRAMS</a>
+                <a href="#classes">CLASSES</a>
+                <a href="#trainers">TRAINERS</a>
+                <a href="#products">STORE</a>
+                <a href="#contact">CONTACT</a>
+                <a href="pages/login.html" class="btn-signup">SIGN IN</a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="landing">
+        <section id="home" class="hero-home">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <p class="hero-subtitle">WORK HARDER, GET STRONGER</p>
+                <h1 class="hero-title">EASY WITH OUR <span class="highlight">GYM</span></h1>
+                <a href="pages/login.html" class="btn-hero">BECOME A MEMBER</a>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll Down</span>
+                <div class="scroll-arrow">↓</div>
+            </div>
+        </section>
+
+        <section id="programs" class="programs-section">
+            <div class="section-header">
+                <h2>CHOOSE <span class="highlight">PROGRAM</span></h2>
+                <div class="section-divider">
+                    <span>~</span>
+                    <span>~</span>
+                    <span>~</span>
+                </div>
+                <p>Select the perfect program tailored to your fitness goals</p>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-icon">💪</div>
+                    <h3>Strength Training</h3>
+                    <p>Build muscle and increase power with our comprehensive strength programs</p>
+                    <a href="#" class="program-link">Learn More →</a>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon">🏃</div>
+                    <h3>Cardio Fitness</h3>
+                    <p>Improve endurance and burn calories with high-intensity cardio workouts</p>
+                    <a href="#" class="program-link">Learn More →</a>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon">🧘</div>
+                    <h3>Yoga & Flexibility</h3>
+                    <p>Enhance flexibility and find balance with guided yoga sessions</p>
+                    <a href="#" class="program-link">Learn More →</a>
+                </div>
+                <div class="program-card">
+                    <div class="program-icon">🥊</div>
+                    <h3>Boxing & MMA</h3>
+                    <p>Learn combat techniques while getting an intense full-body workout</p>
+                    <a href="#" class="program-link">Learn More →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="classes" class="classes-section">
+            <div class="section-header">
+                <h2>OUR <span class="highlight">CLASSES</span></h2>
+                <div class="section-divider">
+                    <span>~</span>
+                    <span>~</span>
+                    <span>~</span>
+                </div>
+            </div>
+            <div class="classes-grid">
+                <div class="class-card">
+                    <div class="class-time">MON-WED-FRI</div>
+                    <h3>CrossFit Training</h3>
+                    <p class="class-schedule">6:00 AM - 7:00 AM</p>
+                    <p>High-intensity functional training</p>
+                </div>
+                <div class="class-card">
+                    <div class="class-time">TUE-THU</div>
+                    <h3>Spin Class</h3>
+                    <p class="class-schedule">7:00 PM - 8:00 PM</p>
+                    <p>Indoor cycling with energetic music</p>
+                </div>
+                <div class="class-card">
+                    <div class="class-time">DAILY</div>
+                    <h3>Personal Training</h3>
+                    <p class="class-schedule">By Appointment</p>
+                    <p>One-on-one customized sessions</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="trainers" class="trainers-section">
+            <div class="section-header">
+                <h2>EXPERT <span class="highlight">TRAINERS</span></h2>
+                <div class="section-divider">
+                    <span>~</span>
+                    <span>~</span>
+                    <span>~</span>
+                </div>
+                <p>Meet our certified fitness professionals</p>
+            </div>
+            <div class="trainers-grid">
+                <div class="trainer-card">
+                    <div class="trainer-image">👨‍🏫</div>
+                    <h3>Mike Johnson</h3>
+                    <p class="trainer-title">Head Trainer</p>
+                    <p>15+ years experience in strength training</p>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">👩‍🏫</div>
+                    <h3>Sarah Williams</h3>
+                    <p class="trainer-title">Yoga Instructor</p>
+                    <p>Certified yoga master & wellness coach</p>
+                </div>
+                <div class="trainer-card">
+                    <div class="trainer-image">👨‍🏫</div>
+                    <h3>David Chen</h3>
+                    <p class="trainer-title">Boxing Coach</p>
+                    <p>Former professional boxer & MMA fighter</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="products-section">
+            <div class="section-header">
+                <h2>SUPPLEMENTS <span class="highlight">STORE</span></h2>
+                <div class="section-divider">
+                    <span>~</span>
+                    <span>~</span>
+                    <span>~</span>
+                </div>
+                <p>Premium quality supplements for optimal performance</p>
+            </div>
+            <div id="product-list" class="product-grid"></div>
+        </section>
+
+        <section id="contact" class="cta-section">
+            <div class="cta-content">
+                <h2>READY TO START YOUR FITNESS JOURNEY?</h2>
+                <p>Join hundreds of members transforming their lives</p>
+                <div class="cta-buttons">
+                    <a href="pages/login.html" class="btn-cta-primary">JOIN NOW</a>
+                    <a href="#programs" class="btn-cta-secondary">VIEW PROGRAMS</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer-home">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>FIT<span>ZONE</span></h3>
+                <p>Your journey to a healthier lifestyle starts here</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#programs">Programs</a>
+                <a href="#classes">Classes</a>
+                <a href="#trainers">Trainers</a>
+                <a href="pages/login.html">Member Login</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>📍 123 Fitness Street, Gym City</p>
+                <p>📞 (555) 123-4567</p>
+                <p>✉️ info@fitzone.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <p>Mon-Fri: 5:00 AM - 11:00 PM</p>
+                <p>Sat-Sun: 7:00 AM - 9:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 FitZone Gym. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/public.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
