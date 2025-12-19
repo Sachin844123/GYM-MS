@@ -104,13 +104,29 @@ The application uses the following tables:
 
 ### Admin Login
 1. Navigate to Login page
-2. Enter admin credentials
+2. Enter admin credentials:
+   - **Email:** `admin@gym.com`
+   - **Password:** `admin123`
 3. Access admin dashboard to manage members, billing, and reports
 
 ### Member Login
 1. Navigate to Login page
-2. Enter member credentials
+2. Enter member credentials:
+   - **Email:** `member@gym.com`
+   - **Password:** `member123`
 3. View profile, receipts, and diet plans
+
+## Test Credentials
+
+For testing purposes, use these credentials:
+
+**Admin Account:**
+- Email: `admin@gym.com`
+- Password: `admin123`
+
+**Member Account:**
+- Email: `member@gym.com`
+- Password: `member123`
 
 ## Security Features
 

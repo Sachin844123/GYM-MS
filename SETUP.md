@@ -49,8 +49,19 @@ Then open http://localhost:3000
 
 ### 6. Test the Application
 
+**Test Credentials:**
+
+**Admin Login:**
+- Email: `admin@gym.com`
+- Password: `admin123`
+
+**Member Login:**
+- Email: `member@gym.com`
+- Password: `member123`
+
+**Testing Steps:**
 1. Go to Login page
-2. Login with your admin credentials
+2. Login with admin credentials above
 3. Add a test member
 4. Create a bill for the member
 5. Logout and login as member to view receipts
